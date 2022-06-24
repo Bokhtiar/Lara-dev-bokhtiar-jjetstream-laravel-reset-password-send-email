@@ -1,17 +1,11 @@
 <?php
 
+use App\Http\Controllers\Student\LessionController;
+use App\Http\Controllers\Teacher\CourseController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,4 +19,21 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function() {
+        Route::get('/dashboard', [LessionController::class, 'index']);
+        //Route::resource('lessons', \App\Http\Controllers\Student\LessionController::class);
+    });
+   Route::group(['middleware' => 'role:teacher', 'prefix' => 'teacher', 'as' => 'teacher.'], function() {
+    Route::get('/dashboard', [CourseController::class, 'index']);
+    //Route::resource('courses', \App\Http\Controllers\Teacher\CourseController::class);
+   });
+    Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function() {
+        Route::get('/dashboard', [UserController::class, 'index']);
+        //Route::resource('users', \App\Http\Controllers\User\UserController::class);
+    });
 });
