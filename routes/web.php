@@ -4,10 +4,12 @@ use App\Http\Controllers\Student\LessionController;
 use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
 
 
 Route::get('/', function () {
+  $divisions =  DB::table('divisions')->where('status',1)->get();
+  dd($divisions);
     return view('welcome');
 });
 

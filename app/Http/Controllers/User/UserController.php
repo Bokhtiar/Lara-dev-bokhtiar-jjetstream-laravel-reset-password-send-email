@@ -11,4 +11,11 @@ class UserController extends Controller
     {
         return "User dashboard";
     }
+
+    public function list()
+    {
+        return response()->json([
+            "message" => "success"
+        ]);
+    }
 }
