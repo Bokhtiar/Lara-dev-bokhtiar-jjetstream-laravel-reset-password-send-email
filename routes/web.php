@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SMScontroller;
 use App\Http\Controllers\Student\LessionController;
 use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Controllers\User\UserController;
@@ -50,4 +51,4 @@ Route::group(['middleware' => 'auth'], function() {
     });
 });
 
-
+Route::get('sendSMS', [SMScontroller::class, 'index']);
