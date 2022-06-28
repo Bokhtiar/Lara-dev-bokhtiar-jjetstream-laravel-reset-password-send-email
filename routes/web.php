@@ -27,6 +27,15 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('send-mail', function () {
+    $details = [
+    'title' => 'Mail from localhost.com',
+    'body' => 'This is for testing email using smtp'
+    ];
+    \Mail::to('bokhtiar.swe@gmail.com')->send(new \App\Mail\TestMail($details));
+    dd("Email is Sent.");
+    });
+
 
 
 Route::group(['middleware' => 'auth'], function() {
